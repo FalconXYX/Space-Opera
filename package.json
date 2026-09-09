@@ -1,0 +1,38 @@
+{
+  "name": "space-opera",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "oxlint",
+    "preview": "vite preview",
+    "verify": "node tools/run.mjs tools/check-events.mjs && node tools/run.mjs tools/check-polyphony.mjs && node tools/run.mjs tools/check-spread.mjs",
+    "tune": "node tools/run.mjs tools/pick-tau.mjs",
+    "probe": "node tools/run.mjs tools/probe-tau.mjs",
+    "exo": "node tools/fetch-exo.mjs && node tools/emit-exo.mjs",
+    "pulse": "node tools/run.mjs tools/check-pulse.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/space-grotesk": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@tonejs/midi": "^2.0.28",
+    "astronomy-engine": "^2.1.19",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "tone": "^15.1.22",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^6.1.0",
+    "oxlint": "^1.79.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.2.2"
+  },
+  "description": "Orbits, heard: orbital periods raised into hearing range, ratios intact.",
+  "license": "MIT"
+}
