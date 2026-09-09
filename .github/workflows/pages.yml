@@ -1,0 +1,48 @@
+name: Pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+# Let the deployment write to Pages, and read the repo to build it.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time; queue rather than cancel so a push mid-build still ships.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      # The same check that runs locally: crossings, polyphony and timbre spread against what
+      # the physics predicts. A build that changes the sound fails here rather than shipping.
+      - run: npm run verify
+      - run: npm run build
+        env:
+          PAGES_BASE: /Space-Opera/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4
